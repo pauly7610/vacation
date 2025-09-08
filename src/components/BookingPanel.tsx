@@ -247,6 +247,11 @@ export const BookingPanel: React.FC<BookingPanelProps> = ({
                     <p className="text-sm text-blue-700">
                       Searching flights: <strong>{flightParams.origin || 'New York (JFK)'}</strong> → <strong>{destination.name} ({destinationAirportCode})</strong>
                     </p>
+                    {destination.name.toLowerCase().includes('vatican') && (
+                      <p className="text-xs text-green-600 mt-1">
+                        ✅ Smart routing: Vatican City flights will use Rome airports (FCO/CIA)
+                      </p>
+                    )}
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>

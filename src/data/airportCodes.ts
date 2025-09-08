@@ -44,6 +44,9 @@ export const airports: Airport[] = [
   { code: 'FCO', name: 'Leonardo da Vinci International Airport', city: 'Rome', country: 'Italy', continent: 'Europe' },
   { code: 'MXP', name: 'Milan Malpensa Airport', city: 'Milan', country: 'Italy', continent: 'Europe' },
   { code: 'VCE', name: 'Venice Marco Polo Airport', city: 'Venice', country: 'Italy', continent: 'Europe' },
+  { code: 'CIA', name: 'Rome Ciampino Airport', city: 'Rome', country: 'Italy', continent: 'Europe' },
+  { code: 'BGY', name: 'Milan Bergamo Airport', city: 'Milan', country: 'Italy', continent: 'Europe' },
+  { code: 'LIN', name: 'Milan Linate Airport', city: 'Milan', country: 'Italy', continent: 'Europe' },
   { code: 'ZUR', name: 'Zurich Airport', city: 'Zurich', country: 'Switzerland', continent: 'Europe' },
   { code: 'VIE', name: 'Vienna International Airport', city: 'Vienna', country: 'Austria', continent: 'Europe' },
   { code: 'CPH', name: 'Copenhagen Airport', city: 'Copenhagen', country: 'Denmark', continent: 'Europe' },
@@ -151,6 +154,48 @@ export const searchAirports = (query: string): Airport[] => {
   ).slice(0, 10); // Limit to 10 results
 };
 
+// City to airport mapping for special cases
+export const cityAirportMapping: Record<string, string> = {
+  // Vatican City should use Rome airports
+  'vatican city': 'FCO',
+  'vatican': 'FCO',
+  'holy see': 'FCO',
+  
+  // Other special cases
+  'manhattan': 'JFK',
+  'brooklyn': 'JFK',
+  'queens': 'LGA',
+  'bronx': 'LGA',
+  'silicon valley': 'SJC',
+  'hollywood': 'LAX',
+  'beverly hills': 'LAX',
+  'santa monica': 'LAX',
+  'malibu': 'LAX',
+  
+  // European special cases
+  'city of london': 'LHR',
+  'westminster': 'LHR',
+  'canary wharf': 'LCY',
+  'versailles': 'CDG',
+  'montmartre': 'CDG',
+  'latin quarter': 'CDG',
+  
+  // Asian special cases
+  'shibuya': 'NRT',
+  'shinjuku': 'NRT',
+  'ginza': 'HND',
+  'harajuku': 'NRT',
+  'kowloon': 'HKG',
+  'tsim sha tsui': 'HKG',
+  'central': 'HKG',
+  
+  // Other major city districts
+  'times square': 'JFK',
+  'wall street': 'JFK',
+  'soho': 'JFK',
+  'tribeca': 'JFK'
+};
+
 export const getPopularAirports = (): Airport[] => {
   // Return most popular airports for quick selection
   const popularCodes = ['JFK', 'LAX', 'LHR', 'CDG', 'NRT', 'SIN', 'DXB', 'SYD', 'GRU', 'CPT'];
@@ -159,6 +204,42 @@ export const getPopularAirports = (): Airport[] => {
 
 // Get airport code for a destination (enhanced version)
 export const getDestinationAirportCode = (destinationName: string, country?: string): string => {
+  // Check special city mappings first
+  const normalizedName = destinationName.toLowerCase().trim();
+  if (cityAirportMapping[normalizedName]) {
+    return cityAirportMapping[normalizedName];
+  }
+  
+  // Special handling for Vatican City
+  if (normalizedName.includes('vatican') || normalizedName.includes('holy see')) {
+    return 'FCO'; // Rome Fiumicino
+  }
+  
+  // Special handling for Rome
+  if (normalizedName.includes('rome') || normalizedName.includes('roma')) {
+    return 'FCO'; // Prefer Fiumicino over Ciampino
+  }
+  
+  // Special handling for New York
+  if (normalizedName.includes('new york') || normalizedName.includes('nyc')) {
+    return 'JFK'; // Prefer JFK over LGA/EWR
+  }
+  
+  // Special handling for London
+  if (normalizedName.includes('london')) {
+    return 'LHR'; // Prefer Heathrow
+  }
+  
+  // Special handling for Paris
+  if (normalizedName.includes('paris')) {
+    return 'CDG'; // Prefer Charles de Gaulle
+  }
+  
+  // Special handling for Tokyo
+  if (normalizedName.includes('tokyo')) {
+    return 'NRT'; // Prefer Narita for international
+  }
+  
   // First try exact city match
   const cityMatches = getAirportsByCity(destinationName);
   if (cityMatches.length > 0) {

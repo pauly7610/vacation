@@ -1,5 +1,5 @@
 import { Destination } from '../types';
-import { getDestinationAirportCode, getAirportsByCity, searchAirports } from '../data/airportCodes';
+import { getDestinationAirportCode, getAirportsByCity, searchAirports, cityAirportMapping } from '../data/airportCodes';
 
 export interface FlightSearchParams {
   origin: string;
@@ -472,9 +472,9 @@ export class BookingService {
     if (match) {
       return match[1];
     }
-    // If no code in parentheses, try to find it in our database
-    const airports = searchAirports(airportString);
-    return airports.length > 0 ? airports[0].code : airportString.substring(0, 3).toUpperCase();
+    
+    // If no code in parentheses, use enhanced destination airport code logic
+    return getDestinationAirportCode(airportString);
   }
 
   // Enhanced URL validation and tracking
@@ -533,7 +533,13 @@ export class BookingService {
 
   // Utility methods
   private getAirportCode(destination: Destination): string {
-    return getDestinationAirportCode(destination.name, destination.country);
+    // Enhanced airport code selection with country context
+    const airportCode = getDestinationAirportCode(destination.name, destination.country);
+    
+    // Log for debugging
+    console.log(`🛫 Airport mapping: ${destination.name} (${destination.country}) → ${airportCode}`);
+    
+    return airportCode;
   }
 
   private getDefaultDepartureDate(): string {
