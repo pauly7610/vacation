@@ -203,6 +203,46 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
 
           {/* Content */}
           <div className="hero-text flex-1 overflow-y-auto p-6 bg-gray-50">
+            {/* Filter Categories Overview */}
+            <div className="mb-6 grid grid-cols-2 gap-3">
+              <div className={`p-3 rounded-lg border-2 cursor-pointer transition-all ${
+                ['location'].includes(activeTab) ? 'border-blue-500 bg-blue-50' : 'border-gray-200 bg-white hover:border-gray-300'
+              }`} onClick={() => setActiveTab('location')}>
+                <div className="text-center">
+                  <span className="text-2xl mb-1 block">🌍</span>
+                  <p className="font-medium text-gray-800 text-sm">Location</p>
+                  <p className="text-xs text-gray-600">Where to go</p>
+                </div>
+              </div>
+              <div className={`p-3 rounded-lg border-2 cursor-pointer transition-all ${
+                ['budget'].includes(activeTab) ? 'border-blue-500 bg-blue-50' : 'border-gray-200 bg-white hover:border-gray-300'
+              }`} onClick={() => setActiveTab('budget')}>
+                <div className="text-center">
+                  <span className="text-2xl mb-1 block">💰</span>
+                  <p className="font-medium text-gray-800 text-sm">Budget</p>
+                  <p className="text-xs text-gray-600">How much to spend</p>
+                </div>
+              </div>
+              <div className={`p-3 rounded-lg border-2 cursor-pointer transition-all ${
+                ['preferences'].includes(activeTab) ? 'border-blue-500 bg-blue-50' : 'border-gray-200 bg-white hover:border-gray-300'
+              }`} onClick={() => setActiveTab('preferences')}>
+                <div className="text-center">
+                  <span className="text-2xl mb-1 block">🎯</span>
+                  <p className="font-medium text-gray-800 text-sm">Preferences</p>
+                  <p className="text-xs text-gray-600">What you like</p>
+                </div>
+              </div>
+              <div className={`p-3 rounded-lg border-2 cursor-pointer transition-all ${
+                ['practical'].includes(activeTab) ? 'border-blue-500 bg-blue-50' : 'border-gray-200 bg-white hover:border-gray-300'
+              }`} onClick={() => setActiveTab('practical')}>
+                <div className="text-center">
+                  <span className="text-2xl mb-1 block">🛡️</span>
+                  <p className="font-medium text-gray-800 text-sm">Practical</p>
+                  <p className="text-xs text-gray-600">Safety & logistics</p>
+                </div>
+              </div>
+            </div>
+
             {activeTab === 'location' && (
               <div className="space-y-6">
                 {/* Continents */}

@@ -260,23 +260,29 @@ export const DestinationCard: React.FC<DestinationCardProps> = ({
 
         {/* Social Sharing Section */}
         <div className="mt-8 pt-6 border-t border-gray-200">
-          <div className="flex items-center justify-between">
-            <h3 className="font-bold text-gray-800 text-lg">Take Action</h3>
-            <div className="flex space-x-2">
+          <div className="space-y-4">
+            <h3 className="font-bold text-gray-800 text-lg text-center">Ready for Your Adventure?</h3>
+            
+            {/* Primary Actions */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <button
                 onClick={() => setShowBooking(true)}
-                className="px-4 py-2 bg-gradient-to-r from-green-500 to-blue-600 text-white rounded-lg hover:shadow-lg transition-all duration-200 hover:scale-105 flex items-center space-x-2"
+                className="w-full px-6 py-4 bg-gradient-to-r from-green-500 to-blue-600 text-white rounded-xl hover:shadow-lg transition-all duration-200 hover:scale-105 flex items-center justify-center space-x-3 font-semibold"
               >
-                <Plane className="w-4 h-4" />
-                <span>Book Trip</span>
+                <Plane className="w-5 h-5" />
+                <span>Book Your Trip to {destination.name}</span>
               </button>
               <button
                 onClick={() => setShowSocialShare(true)}
-                className="px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-lg hover:shadow-lg transition-all duration-200 hover:scale-105 flex items-center space-x-2"
+                className="w-full px-6 py-4 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-xl hover:shadow-lg transition-all duration-200 hover:scale-105 flex items-center justify-center space-x-3 font-semibold"
               >
-                <Share2 className="w-4 h-4" />
-                <span>Share</span>
+                <Share2 className="w-5 h-5" />
+                <span>Share This Discovery</span>
               </button>
+            </div>
+            
+            {/* Secondary Actions */}
+            <div className="flex justify-center space-x-4">
               <button
                 onClick={async () => {
                   try {
@@ -291,16 +297,30 @@ export const DestinationCard: React.FC<DestinationCardProps> = ({
                     alert('Link copied to clipboard!');
                   }
                 }}
-                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center space-x-2"
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center space-x-2 text-sm"
               >
                 <span>📱</span>
                 <span>Quick Share</span>
               </button>
+              <button
+                onClick={() => onSave(destination.id)}
+                className={`px-4 py-2 rounded-lg transition-colors flex items-center space-x-2 text-sm font-medium ${
+                  isSaved 
+                    ? 'bg-red-500 text-white hover:bg-red-600' 
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
+              >
+                <Heart className={`w-4 h-4 ${isSaved ? 'fill-current' : ''}`} />
+                <span>{isSaved ? 'Saved to Wishlist' : 'Save to Wishlist'}</span>
+              </button>
+            </div>
+            
+            <div className="text-center">
+              <p className="text-gray-600 text-sm">
+                💡 <strong>Pro tip:</strong> Save destinations to your wishlist and compare prices across multiple booking sites!
+              </p>
             </div>
           </div>
-          <p className="text-gray-600 text-sm mt-2">
-            Ready to make it happen? Book your trip or share it with friends to inspire their wanderlust! 🌍✨
-          </p>
         </div>
       </div>
     </div>

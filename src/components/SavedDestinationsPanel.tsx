@@ -166,13 +166,25 @@ export const SavedDestinationsPanel: React.FC<SavedDestinationsPanelProps> = ({
                   <p className="text-gray-500 mb-6 max-w-sm">
                     Start exploring and click the ❤️ heart icon on destinations you'd like to visit!
                   </p>
-                  <div className="mb-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                  <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
                     <h4 className="font-semibold text-blue-800 mb-2">💡 How to save destinations:</h4>
                     <ol className="text-sm text-blue-700 text-left space-y-1">
                       <li>1. Click "Surprise Me!" to discover destinations</li>
                       <li>2. Click the ❤️ heart icon on destinations you love</li>
                       <li>3. Return here to view your wishlist anytime</li>
                     </ol>
+                  </div>
+                  <div className="mb-6 grid grid-cols-2 gap-4 text-sm">
+                    <div className="p-3 bg-green-50 rounded-lg border border-green-200">
+                      <div className="text-green-600 text-2xl mb-2">🌍</div>
+                      <p className="font-medium text-green-800">500+ Destinations</p>
+                      <p className="text-green-600">Across 6 continents</p>
+                    </div>
+                    <div className="p-3 bg-purple-50 rounded-lg border border-purple-200">
+                      <div className="text-purple-600 text-2xl mb-2">✈️</div>
+                      <p className="font-medium text-purple-800">Smart Booking</p>
+                      <p className="text-purple-600">Compare prices instantly</p>
+                    </div>
                   </div>
                   <button
                     onClick={onToggle}
